@@ -1,7 +1,7 @@
 import { IsEnum, IsIn, IsOptional, IsString } from 'class-validator';
 import { TaskStatus } from './task.model';
 import { Transform } from 'class-transformer';
-import { PaginationParams } from 'src/common/pagination.params';
+import { PaginationParams } from './../common/pagination.params';
 
 export class FindTaskParams extends PaginationParams {
   @IsOptional()

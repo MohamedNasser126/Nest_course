@@ -8,7 +8,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { TaskStatus } from './task.model';
-import { User } from 'src/user/user.entity';
+import { User } from './../user/user.entity';
 import { TaskLabel } from './task.label.entity';
 
 @Entity()
