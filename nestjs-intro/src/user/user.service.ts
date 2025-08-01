@@ -23,9 +23,10 @@ export class UserService {
     const hashedPassword = await this.passwordService.hash(
       CreateUserDTO.password,
     );
-    return await this.userRepo.save({
+    const user = this.userRepo.create({
       ...CreateUserDTO,
       password: hashedPassword,
     });
+    return await this.userRepo.save(user);
   }
 }

@@ -29,6 +29,7 @@ import { UserModule } from './user/user.module';
       }),
     }),
     ConfigModule.forRoot({
+      isGlobal: true,
       load: [appConfig, typeOrmConfig, authConfig],
       validationSchema: appConfigSchema,
       validationOptions: { abortEarly: true },
