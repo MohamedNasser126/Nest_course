@@ -7,7 +7,6 @@ import {
   Post,
   Request,
   SerializeOptions,
-  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 
@@ -18,7 +17,8 @@ import { loginDto } from '../login.dto';
 import { loginResponse } from '../login.response';
 import { AuthRequest } from '../auth.request';
 import { UserService } from '../user.service';
-import { AuthGuard } from '../auth.guard';
+import { Public } from '../decorators/public.decorators';
+
 @UseInterceptors(ClassSerializerInterceptor)
 @SerializeOptions({ strategy: 'excludeAll' })
 @Controller('auth')
@@ -29,12 +29,14 @@ export class AuthController {
   ) {}
 
   @Post('register')
+  @Public()
   public async register(@Body() CreateUserDTO: CreateUserDTO): Promise<User> {
     const user = await this.authService.register(CreateUserDTO);
     return user;
   }
 
   @Post('login')
+  @Public()
   public async login(@Body() loginDTO: loginDto): Promise<loginResponse> {
     const accessToken = await this.authService.login(
       loginDTO.email,
@@ -43,7 +45,6 @@ export class AuthController {
     return new loginResponse({ accessToken });
   }
   @Get('/profile')
-  @UseGuards(AuthGuard)
   async profile(@Request() req: AuthRequest): Promise<User> {
     const user = await this.userService.findOneById(req.user.sub);
 
