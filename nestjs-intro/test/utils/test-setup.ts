@@ -1,4 +1,4 @@
-import { INestApplication } from '@nestjs/common';
+import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { testConfig } from './../config/test.config';
@@ -41,6 +41,12 @@ export class TestSetup {
 
     // Create NestJS application
     this.app = moduleFixture.createNestApplication();
+    this.app.useGlobalPipes(
+      new ValidationPipe({
+        transform: true,
+        whitelist: true,
+      }),
+    );
     // Get database connection
     this.dataSource = moduleFixture.get(DataSource);
     // Initialize app (starts servers, connects to db etc.)

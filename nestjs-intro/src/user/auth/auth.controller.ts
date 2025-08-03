@@ -18,6 +18,9 @@ import { loginResponse } from '../login.response';
 import { AuthRequest } from '../auth.request';
 import { UserService } from '../user.service';
 import { Public } from '../decorators/public.decorators';
+import { AdminResponse } from '../admin.response';
+import { Role } from '../decorators/roles.decorators';
+import { Roles } from '../roles.enum';
 
 @UseInterceptors(ClassSerializerInterceptor)
 @SerializeOptions({ strategy: 'excludeAll' })
@@ -52,5 +55,12 @@ export class AuthController {
       return user;
     }
     throw new NotFoundException();
+  }
+
+  @Get('admin')
+  @Role(Roles.ADMIN)
+  // eslint-disable-next-line @typescript-eslint/require-await
+  async adminOnly(): Promise<AdminResponse> {
+    return new AdminResponse({ message: 'this is an admin endpoint ' });
   }
 }
